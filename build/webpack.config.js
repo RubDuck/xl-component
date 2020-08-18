@@ -16,7 +16,12 @@ module.exports = {
 				},
 				{
 					test: /\.js$/,
-					loader: 'babel-loader',
+					exclude: /node_modules/,
+					loader: 'eslint-loader',
+					enforce: "pre",
+					options: {
+						formatter: require('eslint-friendly-formatter')
+					},
 				},
 				{
 					test: /\.css$/,
