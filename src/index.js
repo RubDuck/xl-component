@@ -1,9 +1,10 @@
 import Vue from 'vue';
-import Col from '../packages/col';
+// import Col from '../packages/col';
+import Row from '../packages/row';
 
 const vm = new Vue({
   el: '#app',
-  render: r => r(Col)
+  render: r => r(Row)
 });
 Vue.use({
   vm
