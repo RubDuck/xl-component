@@ -15,15 +15,11 @@ module.exports = {
 					test: /\.vue$/,
 					loader: 'vue-loader',
 				},
-				{
-					test: /\.vue$|\.js$/,
-					exclude: /node_modules/,
-					loader: 'eslint-loader',
-					enforce: "pre",
-					options: {
-						formatter: require('eslint-friendly-formatter')
-					},
-				},
+				// {
+				// 	test: /\.js$/,
+				// 	exclude: /node_modules/,
+				// 	loader: 'babel-loader',
+				// },
 				{
 					test: /\.less$/,
 					loader: ['style-loader', 'css-loader', 'less-loader']
@@ -37,12 +33,7 @@ module.exports = {
 				'@': path.resolve(__dirname, '../packages')
 			}
     },
-    devServer: {
-			port: 8800,
-			hot: true
-    },
     plugins: [
-			new webpack.HotModuleReplacementPlugin(), //热更新插件
 			new HtmlWebpackPlugin({
 				title: 'vueComputent',
 				template: path.resolve(__dirname, '../index.html')

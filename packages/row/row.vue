@@ -14,8 +14,8 @@ export default {
   },
   computed: {
     rowClass () {
-      const align = this.createClass(this.align, 'xl-row');
-      const justify = this.createClass(this.justify, 'xl-row');
+      const align = this.createClass(this.align, 'xl-row-align-');
+      const justify = this.createClass(this.justify, 'xl-row-justify-');
       const result = ['xl-row', align, justify];
       return result;
     }

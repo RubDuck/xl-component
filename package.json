@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "karma start",
     "dev": "webpack-dev-server --config build/webpack.config.js",
     "build": "webpack --config build/webpack.config.js"
   },
@@ -31,8 +31,11 @@
     "karma-chai": "^0.1.0",
     "karma-chai-spies": "^0.1.4",
     "karma-chrome-launcher": "^3.1.0",
+    "karma-cli": "^2.0.0",
     "karma-mocha": "^2.0.1",
+    "karma-requirejs": "^1.1.0",
     "karma-sinon-chai": "^2.0.2",
+    "karma-webpack": "^3.0.5",
     "less": "^3.12.2",
     "less-loader": "^6.2.0",
     "mocha": "^8.1.1",
