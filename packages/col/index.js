@@ -1,3 +1,3 @@
-import Col from './col';
+import xlCol from './col';
 
-export default Col;
+export default xlCol;

@@ -1,0 +1,10 @@
+.xl-col{
+  float: left;
+}
+.loop(@counter) when (@counter > 0) {
+  .xl-col-span-@{counter}{width: (@counter/24) * 100%}; // 每次调用时产生的样式代码
+  .xl-col-offset-@{counter}{margin-left: (@counter /24) * 100%}; // 每次调用时产生的样式代码
+  .loop((@counter - 1));    // 递归调用自身
+}
+
+.loop(24);

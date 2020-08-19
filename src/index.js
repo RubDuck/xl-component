@@ -1,10 +1,13 @@
 import Vue from 'vue';
-// import Col from '../packages/col';
-import Row from '../packages/row';
+import xlCol from '../packages/col';
+import xlRow from '../packages/row';
 
 const vm = new Vue({
   el: '#app',
-  render: r => r(Row)
+  components: {
+    xlRow,
+    xlCol
+  }
 });
 Vue.use({
   vm

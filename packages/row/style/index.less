@@ -1,0 +1,29 @@
+@counter: 48;
+
+.xl-row{
+  display: flex;
+  flex-wrap: wrap;
+}
+.xl-row-align-middle{
+  align-items: center;
+}
+.xl-row-align-top{
+  align-items:flex-start;
+}
+.xl-row-align-bottom{
+  align-items: flex-end;
+}
+.xl-row-justify-center{
+  justify-content: center;
+}
+.xl-row-justify-start{
+  justify-content: flex-start;
+}
+.xl-row-justify-end{
+  justify-content: flex-end;
+}
+
+.loop(@counter) when (@counter > 0) {
+  .loop((@counter - 1));    // 递归调用自身
+  .xl-row-gutter(@counter){margin-right: @counter * 1px}; // 每次调用时产生的样式代码
+}

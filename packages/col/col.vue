@@ -1,5 +1,7 @@
 <template>
-  <div :class="classs">这是Col组件</div>
+  <div :class="colClass" :style="{'padding-right': gutter + 'px'}">
+    <slot></slot>
+  </div>
 </template>
 <script>
 
@@ -10,13 +12,33 @@ export default {
     offset: Number
   },
   computed: {
-    classs () {
-      return `xl-col-${this.span}-${this.offset}`;
+    gutter () {
+      let parent = this.$parent;
+      while (parent && parent.$options.name !== 'xlRow') {
+        parent = parent.$parent;
+      }
+      return parent ? parent.gutter : 0;
+    },
+    colClass () {
+      const span = this.createClass(this.span, 'xl-col-span-');
+      const offset = this.createClass(this.offset, 'xl-col-offset-');
+      const res = ['xl-col', span, offset];
+      return res;
+    }
+  },
+  methods: {
+    createClass (name, type) {
+      if (name) {
+        const val = parseFloat(name) >= 24 ? 24 : parseFloat(name);
+        const res = `${type}${val}`;
+        return res;
+      }
+      return '';
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" src='./style/index.less'>
 
 </style>
