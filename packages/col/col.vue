@@ -1,5 +1,5 @@
 <template>
-  <div :class="colClass" :style="{'padding-right': gutter + 'px'}">
+  <div :class="colClass" :style="rowStyle">
     <slot></slot>
   </div>
 </template>
@@ -8,32 +8,49 @@
 export default {
   name: 'xlCol',
   props: {
-    span: Number,
-    offset: Number
+    span: [Number, String],
+    offset: [Number, String],
+    color: {
+      type: String,
+      default: '#fff'
+    }
   },
   computed: {
-    gutter () {
-      let parent = this.$parent;
-      while (parent && parent.$options.name !== 'xlRow') {
-        parent = parent.$parent;
-      }
-      return parent ? parent.gutter : 0;
-    },
     colClass () {
       const span = this.createClass(this.span, 'xl-col-span-');
       const offset = this.createClass(this.offset, 'xl-col-offset-');
       const res = ['xl-col', span, offset];
       return res;
+    },
+    rowStyle () {
+      let parent = this.$parent;
+      while (parent && parent.$options.name !== 'xlRow') {
+        parent = parent.$parent;
+      }
+      const gutter = parent ? parent.gutter : 0;
+      const result = `background-color:${this.color};padding-right:${gutter}px'`;
+      return result;
     }
   },
   methods: {
     createClass (name, type) {
       if (name) {
-        const val = parseFloat(name) >= 24 ? 24 : parseFloat(name);
+        const val = this.toNumber(name) >= 24 ? 24 : this.toNumber(name);
         const res = `${type}${val}`;
         return res;
       }
       return '';
+    },
+    isNum (val) {
+      const res = Number(val);
+      if (Number.isNaN(res)) {
+        return false;
+      }
+      return true;
+    },
+    toNumber (val) {
+      const res = this.isNum(val) ? Number(val) : val;
+      return res;
     }
   }
 };
