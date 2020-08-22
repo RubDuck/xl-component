@@ -9,7 +9,7 @@ function getScroller (el) {
     }
     node = node.parentNode;
   }
-  return node;
+  return node || document.body;
 }
 
 export default getScroller;

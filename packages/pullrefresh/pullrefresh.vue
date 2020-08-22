@@ -109,7 +109,7 @@ export default {
   },
   mounted () {
     this.scrollEl = getScroller(this.$refs.pullRefresh);
-    this.pullHeadeHeight = parseFloat(window.getComputedStyle(this.$refs.pullHeaders).height);
+    this.pullHeadeHeight = parseFloat(window.getComputedStyle(this.$refs.pullHeaders).height) || 50;
     this.bindTouchEvent(this.$refs.pullRefresh);
   }
 };
