@@ -17,7 +17,7 @@ export default {
       type: Boolean,
       required: true
     },
-    loadText: {
+    loadtext: {
       type: String,
       default: '加载中...'
     }
@@ -82,7 +82,7 @@ export default {
       return distance;
     },
     setState (val) {
-      this.pullText = this.loadText;
+      this.pullText = this.loadtext;
       if (val > 0) {
         this.loosen = false;
         return;

@@ -21,7 +21,7 @@ describe('Props', () => {
     it('pull losen event', () => {
       vm = new Constructor({
         propsData: {
-          loadText: 'one tap'
+          loadtext: 'one tap'
         }
       }).$mount()
       // 下拉阶段一

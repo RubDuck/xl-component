@@ -8,15 +8,8 @@
 <body>
   <div id="app">
     <xl-pull-refresh @refresh='onRefresh' v-model='loading'>
-      <div class="test">
-        <xl-row gutter='24'>
-          <xl-col span='24'>1</xl-col>
-          <xl-col span='23'>2</xl-col>
-          <xl-col span='8'>3</xl-col>
-          <xl-col span='23'>4</xl-col>
-          <xl-col span='23'>5</xl-col>
-        </xl-row>
-      </div>
+      <xl-tabbar :navbar='nav' @click='test'>
+      </xl-tabbar>
   </xl-pull-refresh>
   </div>
 </body>
