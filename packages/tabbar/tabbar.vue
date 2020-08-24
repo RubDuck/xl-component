@@ -1,14 +1,20 @@
 <template>
+<div class="xl-tabbars">
   <div class="xl-tabbar" ref='tabbar'>
     <div :class="{'xl-bar_item': true, 'xl_active': index === currentIndex}" :style="barStyle(index)" v-for="(item, index) in navbar" :key="index" @click="changeNav(index)">
       {{item}}
     </div>
     <div class="xl-bar_line" :style="lineStyle"></div>
   </div>
+  <div class="xl-tabcontent" ref="tabcontent">
+    <slot>默认值</slot>
+  </div>
+</div>
 </template>
 
 <script>
 import validate from '../utils/validate';
+import TouchMix from '../utils/dom/touch';
 
 export default {
   name: 'xlTabbar',
@@ -35,6 +41,7 @@ export default {
       currentIndex: ''
     };
   },
+  mixins: [TouchMix],
   computed: {
     lineStyle () {
       const len = this.navbar.length;
@@ -69,11 +76,15 @@ export default {
         return res;
       }
       return 0;
+    },
+    onTouchMove (e) {
+      console.log(e, e.touches[0]);
     }
   },
   mounted () {
     this.deviceWidth = this.$refs.tabbar.clientWidth;
     this.currentIndex = this.dealIndex(this.index);
+    this.bindTouchEvent(this.$refs.tabcontent);
   }
 };
 
