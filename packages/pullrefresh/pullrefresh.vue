@@ -72,11 +72,11 @@ export default {
           break;
         case val > height:
           distance = height + (val - height) / 2;
-          this.pullText = '释放刷新...';
+          this.pullText = '释放刷新....';
           break;
         default:
           distance = val;
-          this.pullText = '下拉刷新...';
+          this.pullText = '下拉刷新....';
           break;
       }
       return distance;
