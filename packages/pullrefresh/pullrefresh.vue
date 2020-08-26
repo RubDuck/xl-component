@@ -31,7 +31,8 @@ export default {
       isloading: '',
       loosen: true,
       pullHeadeHeight: '',
-      pullText: ''
+      pullText: '',
+      direction: ''
     };
   },
   mixins: [TouchMix],
@@ -39,19 +40,25 @@ export default {
     onTouchStart (e) {
       this.duration = 0;
       this.startTouchY = e.touches ? e.touches[0].pageY : e.clientY;
+      this.touchStart(e);
     },
     onTouchMove (e) {
+      console.log(this.direction);
       if (!this.loosen) {
         return;
       }
+      this.touchMove(e);
       const moveTouchY = e.touches ? e.touches[0].pageY : e.clientY;
       const scrollTop = this.scrollEl.scrollTop;
       const distance = moveTouchY - this.startTouchY;
-      if (scrollTop === 0 && distance >= 0) {
+      if (scrollTop === 0 && distance >= 0 && this.direction === 'vertical') {
         this.distance = this.smoothDistance(distance);
         return;
       }
-      this.distance = 0;
+      if (this.direction === 'vertical') {
+        this.distance = 0;
+        e.preventDefault();
+      }
     },
     onTouchEnd () {
       /* eslint-disable-next-line */

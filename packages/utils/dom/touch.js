@@ -20,7 +20,7 @@ const TouchMix = {
     touchMove (e) {
       this.deltaX = e.touches[0].clientX - this.startX;
       this.deltaY = e.touches[0].clientY - this.startY;
-      this.direction = direction(this.deltaX, this.deltaY);
+      this.direction = this.direction || direction(Math.abs(this.deltaX), Math.abs(this.deltaY));
     },
     resetTouchStatus () {
       this.direction = '';
@@ -33,7 +33,6 @@ const TouchMix = {
       const { onTouchStart, onTouchMove, onTouchEnd } = this;
       el.addEventListener('touchstart', onTouchStart);
       el.addEventListener('touchmove', onTouchMove);
-      console.log(el);
       if (onTouchEnd) {
         el.addEventListener('touchend', onTouchEnd);
         el.addEventListener('touchcancel', onTouchEnd);
