@@ -43,7 +43,6 @@ export default {
       this.touchStart(e);
     },
     onTouchMove (e) {
-      console.log(this.direction);
       if (!this.loosen) {
         return;
       }
