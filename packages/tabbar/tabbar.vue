@@ -38,7 +38,10 @@ export default {
     return {
       deviceWidth: '',
       induration: 0,
-      currentIndex: ''
+      currentIndex: '',
+      swipeable: true,
+      deltaX: '',
+      startX: ''
     };
   },
   mixins: [TouchMix],
@@ -55,6 +58,15 @@ export default {
         background: this.linecolor
       };
       return lineStyle;
+    },
+    listeners () {
+      if (this.swipeable) {
+        return {
+          touchstart: this.touchStart,
+          touchmove: this.touchMove
+        };
+      }
+      return '';
     }
   },
   methods: {
@@ -77,8 +89,9 @@ export default {
       }
       return 0;
     },
-    onTouchMove (e) {
-      console.log(e, e.touches[0]);
+    onTouchEnd (e) {
+      // console.log(e, this.deltaX, this.touchmove);
+      // console.log('end');
     }
   },
   mounted () {
