@@ -62,8 +62,8 @@ export default {
     listeners () {
       if (this.swipeable) {
         return {
-          touchstart: this.touchStart,
-          touchmove: this.touchMove
+          touchstart: this.touchStart(),
+          touchmove: this.touchMove()
         };
       }
       return '';
@@ -72,7 +72,6 @@ export default {
   methods: {
     changeNav (index) {
       this.currentIndex = index;
-      this.induration = this.duration;
       this.$emit('click');
     },
     barStyle (index) {
@@ -89,12 +88,27 @@ export default {
       }
       return 0;
     },
-    onTouchEnd (e) {
-      // console.log(e, this.deltaX, this.touchmove);
-      // console.log('end');
+    onTouchStart (e) {
+      this.touchStart(e);
+    },
+    onTouchMove (e) {
+      this.touchMove(e);
+    },
+    onTouchEnd () {
+      this.autoSwiper();
+    },
+    autoSwiper () {
+      const len = this.currentIndex;
+      if (this.deltaX > 0 && len < this.navbar.length - 1) {
+        this.currentIndex = len + 1;
+      }
+      if (this.deltaX < 0 && len > 0) {
+        this.currentIndex = len - 1;
+      }
     }
   },
   mounted () {
+    this.induration = this.duration;
     this.deviceWidth = this.$refs.tabbar.clientWidth;
     this.currentIndex = this.dealIndex(this.index);
     this.bindTouchEvent(this.$refs.tabcontent);
