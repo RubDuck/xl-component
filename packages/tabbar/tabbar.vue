@@ -7,7 +7,7 @@
     <div class="xl-bar_line" :style="lineStyle"></div>
   </div>
   <div class="xl-tabcontent" ref="tabcontent">
-    <slot>默认值</slot>
+    <slot></slot>
   </div>
 </div>
 </template>
