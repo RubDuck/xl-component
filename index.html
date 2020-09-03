@@ -7,10 +7,7 @@
 </head>
 <body>
   <div id="app">
-    <xl-pull-refresh @refresh='onRefresh' v-model='loading'>
-      <xl-tabbar :navbar='nav' @click='test'>
-      </xl-tabbar>
-  </xl-pull-refresh>
+    <xl-switch v-model='checked' isactive='blue' size='24'></xl-switch>
   </div>
 </body>
 </html>

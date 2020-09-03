@@ -1,0 +1,30 @@
+.xl-switch{
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  width: 2em;
+  border:1px solid rgba(0, 0, 0, 0.1);
+  background:rgb(238, 10, 36);
+  border-radius: 0.5em;
+}
+.switch_node{
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  background: #ffffff;
+  transition-duration:0.3s;
+}
+.is-checked.xl-switch{
+  background: rgb(7, 193, 96);
+}
+.is-checked .switch_node{
+  transform: translate(1em, -50%);
+}
+.xl-switch.disable{
+  cursor: not-allowed;
+}
