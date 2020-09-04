@@ -1,0 +1,24 @@
+@import '../../style/common.less';
+
+.picker-columns{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.picker-column{
+  flex: 1;
+}
+.picker-column__message{
+  height: @picker-item-height;
+  line-height: @picker-item-height;
+  text-align: center;
+}
+.picker-frame{
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: @picker-item-height;
+  border-top: @picker-border-line;
+  border-bottom: @picker-border-line;
+}
