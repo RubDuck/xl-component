@@ -28,11 +28,11 @@ describe('Props', () => {
       const pullElement = vm.$refs.pullRefresh;
       trigger(pullElement, 'touchstart', 0, 0);
       trigger(pullElement, 'touchmove', 0, 50);
-      expect(vm.$data.pullText === '下拉刷新...').to.equal(true);
+      expect(vm.$data.pullText === '下拉刷新....').to.equal(true);
       // 下拉阶段二
       trigger(pullElement, 'touchstart', 0, 0);
       trigger(pullElement, 'touchmove', 0, 60);
-      expect(vm.$data.pullText === '释放刷新...').to.equal(true);
+      expect(vm.$data.pullText === '释放刷新....').to.equal(true);
       // 释放一
       trigger(pullElement, 'touchstart', 0, 0);
       trigger(pullElement, 'touchmove', 0, 60);
