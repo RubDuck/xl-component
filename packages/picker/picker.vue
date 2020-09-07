@@ -1,7 +1,7 @@
 <template>
     <div class="xl-picker">
         <div class="picker-columns" :style="pickStyle">
-          <pickcolumn :columns='columns' ref="pickercolumn"></pickcolumn>
+          <pickcolumn :columns='columns' ref="pickercolumn" :visiblecount='visiblecount || 6'></pickcolumn>
           <div class="picker-frame" :style="pickFrameStyle"></div>
         </div>
     </div>
@@ -9,7 +9,6 @@
 
 <script>
 import validate from '../utils/validate';
-// import TouchMix from '../utils/dom/touch';
 import pickcolumn from './pickcolumn';
 
 export default {
@@ -46,7 +45,6 @@ export default {
   },
   mounted () {
     this.itemHeight = this.$refs.pickercolumn.getItemHeight();
-    console.log(this.itemHeight);
   }
 };
 </script>
