@@ -13,7 +13,10 @@ export default {
   name: 'xlPickerColumn',
   props: {
     columns: Array,
-    visiblecount: [Number, String]
+    visiblecount: {
+      type: [Number, String],
+      default: 6
+    }
   },
   data () {
     return {
@@ -25,9 +28,11 @@ export default {
       startTime: '',
       distance: '',
       duration: 0,
-      endDistance: '',
+      endDistance: 0,
       limitTime: 300,
-      limitDistance: 15
+      limitDistance: 15,
+      momentum: '',
+      halfNum: ''
     };
   },
   mixins: [TouchMix],
@@ -42,10 +47,12 @@ export default {
       return this.itemHeight;
     },
     onTouchStart (e) {
+      const start = e.touches ? e.touches[0].pageY : e.clientY;
       this.touchStart(e);
       this.duration = 0;
-      this.startTime = new Date();
-      this.startY = e.touches ? e.touches[0].pageY : e.clientY;
+      this.startTime = Date.now();
+      this.startY = start;
+      this.momentum = this.endDistance;
     },
     onTouchMove (e) {
       this.touchMove(e);
@@ -54,40 +61,65 @@ export default {
         this.touchY = moveY - this.startY;
         const distance = this.endDistance + (moveY - this.startY);
         const maxDistances = distance > 0 ? this.maxDistanceDown : this.maxDistanceUp;
-        const now = new Date();
-        if (now - this.startTime > this.limitTime) {
-          this.startTime = now;
-        }
+        const now = Date.now();
+        this.distance = distance;
         if (Math.abs(distance) >= Math.abs(maxDistances)) {
           this.distance = maxDistances;
-          return;
         }
-        this.distance = distance;
+        if (now - this.startTime > this.limitTime) {
+          this.startTime = now;
+          this.momentum = this.distance;
+        }
         e.preventDefault();
       }
     },
     onTouchEnd () {
-      let distances;
-      const endTime = new Date();
-      const inertia = (endTime - this.startTime) < this.limitTime;
-      if (inertia) {
-        console.log(1);
+      const endTime = Date.now();
+      const inertia = endTime - this.startTime;
+      const distance = this.distance - this.momentum;
+      if (inertia < this.limitTime && Math.abs(distance) > this.limitDistance) {
+        this.onMomentum(distance, inertia);
+        return;
       }
-      const num = this.distance > 0 ? Math.ceil(this.distance / this.itemHeight) : Math.floor(this.distance / this.itemHeight);
-      const maxDistance = this.distance > 0 ? this.maxDistanceDown : this.maxDistanceUp;
-      distances = num * this.itemHeight;
-      if (Math.abs(this.distance) === Math.abs(maxDistance)) {
-        distances = this.distance > 0 ? this.distance - this.itemHeight : this.distance + this.itemHeight;
-      }
-      this.distance = distances;
-      this.endDistance = distances;
       this.duration = 0.3;
+      this.dealDistance(this.distance);
+    },
+    onMomentum (distance, time) {
+      let distances;
+      const speed = Math.abs(distance / time);
+      const maxDistances = distance > 0 ? this.maxDistanceDown : this.maxDistanceUp;
+      distances = this.distance + (speed / 0.006) * (distance < 0 ? -1 : 1);
+      if (Math.abs(distances) > Math.abs(maxDistances)) {
+        distances = maxDistances;
+      }
+      this.duration = 0.6;
+      this.dealDistance(distances);
+    },
+    dealDistance (val) {
+      let distances;
+      const num = val > 0 ? parseInt(val / this.itemHeight) : parseInt(val / this.itemHeight);
+      const maxDistance = val > 0 ? this.maxDistanceDown : this.maxDistanceUp;
+      distances = num * this.itemHeight;
+      if (Math.abs(distances) >= Math.abs(maxDistance)) {
+        distances = val > 0 ? maxDistance - this.itemHeight : maxDistance + this.itemHeight;
+      }
+      const res = distances + this.halfNum * this.itemHeight * (val > 0 ? 1 : -1);
+      this.distance = res;
+      this.endDistance = res;
+    },
+    originData () {
+      const len = Math.max(this.columns.length, this.visiblecount);
+      const num = len % 2 === 0 ? Math.ceil(len / 2) - 0.5 : Math.ceil(len / 2);
+      this.halfNum = len % 2 === 0 ? -0.5 : 0;
+      this.itemHeight = this.$refs.messageColumn[0].offsetHeight;
+      this.maxDistanceDown = this.itemHeight * (parseInt(this.visiblecount / 2) + 1 + this.halfNum);
+      this.maxDistanceUp = this.itemHeight * (parseInt(this.visiblecount / 2) + this.halfNum) - this.$refs.columnMain.offsetHeight;
+      this.distance = (this.visiblecount / 2 - num) * this.itemHeight;
+      this.endDistance = (this.visiblecount / 2 - num) * this.itemHeight;
     }
   },
   mounted () {
-    this.itemHeight = this.$refs.messageColumn[0].offsetHeight;
-    this.maxDistanceDown = this.itemHeight * (this.visiblecount / 2 + 1);
-    this.maxDistanceUp = this.itemHeight * (this.visiblecount / 2) - this.$refs.columnMain.offsetHeight;
+    this.originData();
     this.bindTouchEvent(this.$refs.pickColumn);
   }
 };

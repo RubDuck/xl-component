@@ -12,7 +12,7 @@ const vm = new Vue({
   data: {
     loading: false,
     nav: ['授权管理', '权限管理', '权限转移'],
-    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    columns: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], ['江西', '武汉', '深圳', '上海', '北京']]
   },
   components: {
     xlRow,

@@ -1,8 +1,9 @@
 <template>
     <div class="xl-picker">
         <div class="picker-columns" :style="pickStyle">
-          <pickcolumn :columns='columns' ref="pickercolumn" :visiblecount='visiblecount || 6'></pickcolumn>
-          <div class="picker-frame" :style="pickFrameStyle"></div>
+          <pickcolumn :columns='item' ref="pickercolumn" :visiblecount='visiblecount || 6' v-for="(item,index) in columns" :key="index"></pickcolumn>
+          <div class="pick-mask"></div>
+          <div class="picker-frame"></div>
         </div>
     </div>
 </template>
@@ -19,8 +20,7 @@ export default {
   },
   data () {
     return {
-      itemHeight: '',
-      list: [1, 2]
+      itemHeight: ''
     };
   },
   components: {
@@ -31,20 +31,20 @@ export default {
       const num = validate.isNum(this.visiblecount) ? Number(this.visiblecount) : 6;
       const height = this.itemHeight * num;
       return `height: ${height}px`;
-    },
-    pickFrameStyle () {
-      let res;
-      const num = validate.isNum(this.visiblecount) ? Number(this.visiblecount) : 6;
-      if (num % 2 === 1) {
-        res = 'transform: translateY(-50%)';
-      }
-      return res;
     }
+    // pickFrameStyle () {
+    //   let res;
+    //   const num = validate.isNum(this.visiblecount) ? Number(this.visiblecount) : 6;
+    //   if (num % 2 === 1) {
+    //     res = 'transform: translateY(-50%)';
+    //   }
+    //   return res;
+    // }
   },
   methods: {
   },
   mounted () {
-    this.itemHeight = this.$refs.pickercolumn.getItemHeight();
+    this.itemHeight = this.$refs.pickercolumn[0].getItemHeight();
   }
 };
 </script>
