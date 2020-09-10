@@ -26,7 +26,6 @@ const vm = new Vue({
     onRefresh () {
     },
     test () {
-      console.log('正在切换');
     }
   }
 });
