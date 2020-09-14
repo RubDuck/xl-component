@@ -32,14 +32,6 @@ export default {
       const height = this.itemHeight * num;
       return `height: ${height}px`;
     }
-    // pickFrameStyle () {
-    //   let res;
-    //   const num = validate.isNum(this.visiblecount) ? Number(this.visiblecount) : 6;
-    //   if (num % 2 === 1) {
-    //     res = 'transform: translateY(-50%)';
-    //   }
-    //   return res;
-    // }
   },
   methods: {
   },
